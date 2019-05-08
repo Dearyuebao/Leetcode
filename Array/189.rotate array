@@ -1,0 +1,50 @@
+class Solution {
+    public void rotate(int[] nums, int k) {
+        //my solution :beats 39%
+        k=k%nums.length;
+        int[] res=new int[nums.length];
+        for(int i=0;i<k;i++)
+        {
+            res[i]=nums[nums.length-k+i];
+        }
+        for(int i=0;i<nums.length-k;i++)
+        {
+            res[k+i]=nums[i];
+        }
+        for(int i=0;i<nums.length;i++)
+        {
+            nums[i]=res[i];
+        }
+ }
+ 
+class Solution {
+    public void rotate(int[] nums, int k) {
+        //amazing solution lower space storage
+        k=k%nums.length;
+        reverse(nums,0,nums.length-1);
+        reverse(nums,0,k-1);
+        reverse(nums,k,nums.length-1);
+    }
+    public void reverse(int[] nums,int start,int end)
+    {
+        while(start<end){
+            int temp=nums[start];
+            nums[start]=nums[end];
+            nums[end]=temp;
+            start++;
+            end--;
+        }
+    }
+}
+
+class Solution {
+    public void rotate(int[] nums, int k) {
+        //use System.arraycopy(source array, begin of source array, new array,begin of paste, length of paste)
+        k=k%nums.length;
+        int l=nums.length;
+        int[] newnums=new int[l];
+        System.arraycopy(nums,l-k,newnums,0,k);
+        System.arraycopy(nums,0,newnums,k,l-k);
+        System.arraycopy(newnums,0,nums,0,l);
+    }
+}

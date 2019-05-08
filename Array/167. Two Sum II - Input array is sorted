@@ -1,0 +1,49 @@
+class Solution {
+    public int[] twoSum(int[] numbers, int target) {
+        //my solution beats 13%
+        // int[] res=new int[2];
+        // if(numbers.length<=1) return res;
+        // for(int i=0;i<numbers.length;i++)
+        // {
+        //     for(int j=i+1;j<numbers.length;j++)
+        //     {
+        //         if(numbers[i]+numbers[j]==target)
+        //         {
+        //             res[0]=i+1;
+        //             res[1]=j+1;
+        //             return res;
+        //         }
+        //         if(numbers[i]+numbers[j]>target)
+        //         {
+        //             break;
+        //         }
+        //     }
+        //     if(numbers[i]+numbers[i+1]>target)
+        //     {
+        //         break;
+        //     }
+        // }
+        // return res;
+        
+        //sliding window solution 
+
+        int left=0,right=numbers.length-1;
+        while(left<right)
+        {
+            if(numbers[left]+numbers[right]==target)
+            {
+                break;
+            }
+            else if(numbers[left]+numbers[right]<target)
+            {
+                left++;
+            }
+            else if(numbers[left]+numbers[right]>target)
+            {
+                right--;
+            }
+        }
+        return new int[]{left+1,right+1};
+
+    }
+}

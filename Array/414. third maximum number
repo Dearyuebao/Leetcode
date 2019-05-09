@@ -1,0 +1,50 @@
+class Solution {
+    public int thirdMax(int[] nums) {
+        //my solution beats 81%
+        // Arrays.sort(nums);
+        // int max=nums[nums.length-1];
+        // int count=1;
+        // for(int i=nums.length-2;i>=0;i--)
+        // {
+        //     if(nums[i]!=max)
+        //     {
+        //         max=nums[i];
+        //         count++;
+        //     }
+        //     if(count==3)
+        //     {
+        //         break;
+        //     }
+        // }
+        // return count>=3? max:nums[nums.length-1];
+        
+        //record three max numbers without using sort
+        long max=Long.MIN_VALUE,secmax=Long.MIN_VALUE,thirdmax=Long.MIN_VALUE;
+        for(int i=0;i<nums.length;i++)
+        {
+            if(nums[i]>max)
+            {
+                thirdmax=secmax;
+                secmax=max;
+                //give "int" to "long" is available, to "Long is unavailable"
+                max=nums[i];
+            }
+            else if(nums[i]>secmax&&nums[i]!=max)
+            {
+                thirdmax=secmax;
+                secmax=nums[i];
+            }
+            else if(nums[i]>thirdmax&&nums[i]!=secmax&&nums[i]!=max)
+            {
+                thirdmax=nums[i];
+            }
+        }
+        if(thirdmax==Long.MIN_VALUE)
+        {
+            //change long to int to satisfy the out type
+            return Integer.parseInt(String.valueOf(max));
+        }
+        //return Long(thirdmax).intValue();
+        return Integer.parseInt(String.valueOf(thirdmax));
+    }
+}

@@ -1,0 +1,55 @@
+class Solution {
+    public int findMaxConsecutiveOnes(int[] nums) {
+        //my solution beats 79%
+        // int max=0,fast=0,slow=0;
+        // for(int i=0;i<nums.length;i++)
+        // {
+        //     if(nums[i]==1)
+        //     {
+        //         fast++;
+        //     }
+        //     else if(nums[i]==0)
+        //     {
+        //         //use this instead of Math.max() will be faster
+        //         if(fast-slow>max)
+        //         {
+        //             max=fast-slow;
+        //         }
+        //        // max=Math.max(max,fast-slow);
+        //         fast=i+1;
+        //         slow=i+1;
+        //     }
+        // }
+        // //return Math.max(max,fast-slow);
+        // if(fast-slow>max)
+        // {
+        //     return fast-slow;
+        // }
+        // return max;
+        
+        
+        //similar more direct solution, more perfect
+        int curr=0,max=0;
+        for(int i=0;i<nums.length;i++)
+        {
+            if(nums[i]==1)
+            {
+        use one curr will save storage space than fast and slow
+                curr++;
+            }
+            else
+            {
+                if(curr>max)
+                {
+                    max=curr;
+                }
+                curr=0;
+            }
+        }
+        if(curr>max)
+        {
+            return curr;
+        }
+      return max;
+    }
+}

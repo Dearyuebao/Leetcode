@@ -1,0 +1,70 @@
+class Solution {
+     public int findPairs(int[] nums, int k) {
+         //my solution beats 76%
+        if(k<0) return 0;
+        Set<Integer> set=new HashSet<Integer>();
+        Set<Integer> dupli=new HashSet<Integer>();
+        int count=0;
+        for(int i=0;i<nums.length;i++)
+        {
+            if(set.contains(nums[i]))
+            {
+                dupli.add(nums[i]);
+            }
+            set.add(nums[i]);
+        }
+        for(int i=0;i<nums.length;i++)
+        {
+            if(set.contains(nums[i]+k))
+            {
+                count++;
+                set.remove(nums[i]+k);
+            }
+        }
+        return k==0? dupli.size():count;
+    }
+    
+    
+    //solution beats 98%
+//     public int findPairs(int[] nums, int k) {
+//         if(k < 0) return 0;
+//         return k > 0 ? kNZ(nums,k) : kZ(nums,k);
+//     }
+    
+// 	/*If k > 0, use Hashset() to store the unique value */
+//     private int kNZ(int[] nums, int k){
+//         Set<Integer> set = new HashSet<>();
+        
+//         for(int n : nums){
+//             set.add(n);
+//         }
+        
+//         Iterator value = set.iterator();
+//         int total = 0;
+//         while(value.hasNext()){
+//             if(set.contains((int)value.next()+k)) total++;
+//         }
+        
+//         return total;
+//     }
+    
+// 	/*If k = 0, sort and count the numbers of each value*/
+//     private int kZ(int[] nums, int k){
+//         if(nums.length < 2) return 0;
+//         Arrays.sort(nums);
+//         int count = 1, total = 0;
+//         for(int i = 1; i < nums.length; i++){
+//             if(nums[i] == nums[i-1]){
+//                 count++;
+//                 if(i == nums.length - 1){
+//                     total++;
+//                 }
+//             } 
+//             else if(count > 1){
+//                 total++;
+//                 count = 1;
+//             }
+//         }
+//         return total;
+//     }
+}

@@ -1,0 +1,36 @@
+class Solution {
+    public int arrayPairSum(int[] nums) {
+        //my solution beats 75%
+        // Arrays.sort(nums);
+        // int sum=0;
+        // for(int i=0;i<nums.length/2;i++)
+        // {
+        //     sum+=nums[2*i];
+        // }
+        // return sum;
+        
+        //similar to times solution: use another int[] to record, equals to Arrays.sort()
+        //without sort, it will be more faster; use odd 
+        //100%
+        int[] exists=new int[20001];
+        for(int i=0;i<nums.length;i++)
+        {
+            exists[nums[i]+10000]++;
+        }
+        int sum=0;
+        Boolean odd=true;
+        for(int i=0;i<exists.length;i++)
+        {
+            while(exists[i]>0)
+            {
+                if(odd==true)
+                {
+                    sum+=i-10000;
+                }
+                exists[i]--;
+                odd=!odd;
+            }
+        }
+        return sum;
+    }
+}

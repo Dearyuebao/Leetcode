@@ -1,0 +1,25 @@
+class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        List<List<Integer>> res=new ArrayList<List<Integer>>();
+        if(nums==null||nums.length==0) return res;
+        Arrays.sort(nums);
+        helper(nums,0,true,res,new ArrayList<Integer>());
+        return res;
+    }
+    public void helper(int[] nums,int idx,boolean taken,List<List<Integer>> res,List<Integer> curr)
+    {
+        if(idx==nums.length)
+        {
+            res.add(new ArrayList<Integer>(curr));//take care that we have to build a new List each time
+        }
+        else{
+            helper(nums,idx+1,false,res,curr);//it is important to introduce taken 
+            if(taken||nums[idx]!=nums[idx-1])
+            {
+                curr.add(nums[idx]);
+                helper(nums,idx+1,true,res,curr);
+                curr.remove(curr.size()-1);//if we want to use list.remove(contains the index, not the number)
+            }
+        }
+    }
+}

@@ -1,0 +1,30 @@
+class Solution {
+    public int minimumTotal(List<List<Integer>> triangle) {
+        //recursive  time limit exceed
+        //return helper(triangle,0,0,Integer.MAX_VALUE,0);
+        
+        //from bottom to up
+        //dp amazing
+        int len=triangle.size();
+        int[] dp=new int[len+1];
+        for(int i=len-1;i>=0;i--)
+        {
+            for(int j=0;j<triangle.get(i).size();j++)
+            {
+                dp[j]=Math.min(dp[j],dp[j+1])+triangle.get(i).get(j);
+            }
+        }
+        return dp[0];
+    }
+    
+    // public int helper(List<List<Integer>> triangle,int level,int index,int min,int sum)
+    // {
+    //     sum+=triangle.get(level).get(index);
+    //     if(level==triangle.size()-1)
+    //     {
+    //         return Math.min(min,sum);
+    //     }
+    //     return Math.min(helper(triangle,level+1,index,min,sum),helper(triangle,level+1,index+1,min,sum));
+    // }
+}
+

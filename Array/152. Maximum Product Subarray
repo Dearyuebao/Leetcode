@@ -1,0 +1,59 @@
+class Solution {
+    public int maxProduct(int[] nums) {
+        //important: currmax comes from former currmax or currmin
+        // if(nums==null||nums.length==0) return 0;
+        // int product=nums[0];
+        // int maxtocurr=nums[0],mintocurr=nums[0];
+        // int max=nums[0];
+        // for(int i=1;i<nums.length;i++)
+        // {
+            //use currmax and currmin in case of maxtocurr change
+        //     int currmax=maxtocurr;
+        //     int currmin=mintocurr;
+        //     maxtocurr=Math.max(Math.max(currmax*nums[i],currmin*nums[i]),nums[i]);
+        //     mintocurr=Math.min(Math.min(currmax*nums[i],currmin*nums[i]),nums[i]);
+        //     //product=Math.max(maxtocurr,mintocurr);
+        //     max=Math.max(max,maxtocurr);
+        // }
+        // return max;
+        
+        //amazing right->left & left->right
+        //if this array contains an even number of minus,the maximum product is the product of all numbers in         //the array, if it contains an odd number of minus, the mamimum product is the product of numbers in           //front of the last odd number(left->right) or the product of numbers behind the first odd                     //number(right-        >left)
+        if(nums==null||nums.length==0) return 0;
+        int leftmax=nums[0],rightmax=nums[nums.length-1];
+        int count=1;
+        for(int i=0;i<nums.length;i++)
+        {
+            if(nums[i]==0)
+            {
+                count=0;
+            }
+            else{
+                if(count==0)
+                {
+                    count=1;
+                }
+                count*=nums[i];
+            }
+                leftmax=Math.max(leftmax,count);
+            
+        }
+        count=1;
+        for(int i=nums.length-1;i>=0;i--)
+        {
+            if(nums[i]==0)
+            {
+                count=0;
+            }
+            else{
+                if(count==0)
+                {
+                    count=1;
+                }
+                count*=nums[i];
+            }
+                rightmax=Math.max(rightmax,count);
+        }
+        return Math.max(leftmax,rightmax);
+    }
+}

@@ -1,0 +1,61 @@
+class Solution {
+    public int pivotIndex(int[] nums) {
+        //not easy to thought out, beats 60%
+        // int sum=0;
+        // if(nums==null||nums.length==0)
+        // {
+        //     return -1;
+        // }
+        // for(int i=0;i<nums.length;i++)
+        // {
+        //     sum+=nums[i];
+        // }
+        // int leftsum=0,rightsum=sum;
+        // for(int i=0;i<nums.length;i++)
+        // {
+        //     rightsum-=nums[i];
+        //     if(leftsum==rightsum)
+        //     {
+        //         return i;
+        //     }
+        //     leftsum+=nums[i];
+        // }
+        // return -1;
+        
+        //beats 60%
+        if(nums==null||nums.length==0) return -1;
+        int leftsum=0,rightsum=0;
+        int[] lefttoright=new int[nums.length];
+        int[] righttoleft=new int[nums.length];
+        for(int i=0;i<nums.length;i++)
+        {
+            leftsum+=nums[i];
+            rightsum+=nums[nums.length-1-i];
+            lefttoright[i]=leftsum;
+            righttoleft[nums.length-1-i]=rightsum;
+        }
+        //special situation: -1 -1 -1 0 1 1
+        if(nums.length>1)
+        {
+            if(righttoleft[1]==0)//take care
+            {
+                return 0;//i=0
+            }
+        }
+        for(int i=0;i<nums.length-2;i++)
+        {
+            if(lefttoright[i]==righttoleft[i+2])
+            {
+                return i+1;
+            }
+        }
+        if(nums.length>1)//0 1 
+        {
+            if(lefttoright[nums.length-2]==0)
+            {
+                return nums.length-1;//i=nums.length-1
+            }
+        }
+        return -1;
+    }
+}

@@ -1,0 +1,31 @@
+class Solution {
+    public boolean isOneBitCharacter(int[] bits) {
+        //situations must not be one-bit: bits[bits.length-1]==1; 
+        //bits[bits.length-2]==1 && bits[bits.length-3]==0
+        //if bits[bits.length-3]==1, 0 1 1 0 ok; 1 1 1 0 not ok;
+        //the former solution is too complicate to analyze
+        
+        //use pointer
+        int pointer=0;
+        if(bits.length==1&&bits[0]==0)
+        {
+            return true;
+        }//take care special situation
+        while(pointer<bits.length)
+        {
+            if(bits[pointer]==0)
+            {
+                pointer++;
+            }
+            else
+            {
+                pointer+=2;    
+            }
+            if(pointer==bits.length-1)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+}

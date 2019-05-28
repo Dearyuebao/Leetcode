@@ -1,0 +1,14 @@
+class Solution {
+    public int minCostClimbingStairs(int[] cost) {
+        //dp solution, record the mincost arrive before mincost[i] instead of after mincost[i](my former wrong solution)
+        int[] mincost=new int[cost.length+1];
+        mincost[0]=0;
+        mincost[1]=0;
+        for(int i=2;i<cost.length+1;i++)
+        {
+            mincost[i]=Math.min(mincost[i-2]+cost[i-2],mincost[i-1]+cost[i-1]);
+            
+        }
+        return mincost[cost.length];
+    }
+}

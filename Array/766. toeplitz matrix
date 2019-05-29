@@ -1,0 +1,48 @@
+class Solution {
+    public boolean isToeplitzMatrix(int[][] matrix) {
+        //my solution: time limit exceed
+        // int row=matrix.length,col=matrix[0].length;
+        // for(int m=0;m<col;m++)
+        // {
+        //     int curr=matrix[0][m];
+        //     int j=0,i=m;
+        //     while(i<col&&j<row)
+        //     {
+        //         if(matrix[j++][i++]!=curr)
+        //         {
+        //             return false;
+        //         }
+        //     }
+        // }
+        // for(int n=1;n<row;n++)
+        // {
+        //     int curr=matrix[n][0];
+        //     int j=n,i=0;
+        //     while(j<row&&i<col)
+        //     {
+        //         if(matrix[j][i]!=curr)
+        //         {
+        //             return false;
+        //         }
+        //     }
+        // }
+        // return true;
+        
+        //my clean solution beats 100%
+        int row=matrix.length,col=matrix[0].length;
+        for(int i=0;i<row;i++)
+        {
+            for(int j=0;j<col;j++)
+            {
+                if(j!=0&&i!=0)
+                {
+                    if(matrix[i][j]!=matrix[i-1][j-1])
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+}

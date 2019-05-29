@@ -1,0 +1,27 @@
+class Solution {
+    public List<List<Integer>> largeGroupPositions(String S) {
+        //my solution beats 100%
+        List<List<Integer>> res=new ArrayList<List<Integer>>();
+        char[] s=S.toCharArray();
+        int point=0;
+        while(point<s.length)
+        {
+            List<Integer> curr=new ArrayList<Integer>();
+            int start=point;
+            int count=0;
+            while(point<s.length-1&&s[point]==s[point+1])
+            {
+                count++;
+                point++;
+            }
+            point++;
+            if(count>=2)
+            {
+                curr.add(start);
+                curr.add(start+count);
+                res.add(curr);
+            }
+        }
+        return res;
+    }
+}

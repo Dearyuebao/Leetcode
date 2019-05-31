@@ -1,0 +1,130 @@
+// class Solution {
+//     public int numMagicSquaresInside(int[][] grid) {
+//         //my solution beats 40%
+//         int row=grid.length,col=grid[0].length;
+//         int count=0;
+//         for(int i=0;i<row-2;i++)
+//         {
+//             for(int j=0;j<col-2;j++)
+//             {
+//                 Set<Integer> set=new HashSet<Integer>();
+//                 if(grid[i][j]<=9&&grid[i][j]>=1) set.add(grid[i][j]);
+//                 if(grid[i][j+1]<=9&&grid[i][j]>=1) set.add(grid[i][j+1]);
+//                 if(grid[i][j+2]<=9&&grid[i][j]>=1) set.add(grid[i][j+2]);
+//                 if(grid[i+1][j]<=9&&grid[i][j]>=1) set.add(grid[i+1][j]);
+//                 if(grid[i+1][j+1]<=9&&grid[i][j]>=1) set.add(grid[i+1][j+1]);
+//                 if(grid[i+1][j+2]<=9&&grid[i][j]>=1) set.add(grid[i+1][j+2]);
+//                 if(grid[i+2][j]<=9&&grid[i][j]>=1) set.add(grid[i+2][j]);
+//                 if(grid[i+2][j+1]<=9&&grid[i][j]>=1) set.add(grid[i+2][j+1]);
+//                 if(grid[i+2][j+2]<=9&&grid[i][j]>=1) set.add(grid[i+2][j+2]);
+//                 if(set.size()!=9)
+//                 {
+//                     continue;
+//                 }
+
+//                 //current grid[i][j] is peak of each grid
+//                 if(grid[i][j]+grid[i][j+1]+grid[i][j+2]!=15)
+//                 {
+//                     continue;
+//                 }
+//                 if(grid[i+1][j]+grid[i+1][j+1]+grid[i+1][j+2]!=15)
+//                 {
+//                     continue;
+//                 }
+//                 if(grid[i+2][j]+grid[i+2][j+1]+grid[i+2][j+2]!=15)
+//                 {
+//                     continue;
+//                 }
+//                 if(grid[i][j]+grid[i+1][j]+grid[i+2][j]!=15)
+//                 {
+//                     continue;
+//                 }
+//                 if(grid[i][j+1]+grid[i+1][j+1]+grid[i+2][j+1]!=15)
+//                 {
+//                     continue;
+//                 }
+//                 if(grid[i][j+2]+grid[i+1][j+2]+grid[i+2][j+2]!=15)
+//                 {
+//                     continue;
+//                 }
+//                 if(grid[i][j]+grid[i+1][j+1]+grid[i+2][j+2]!=15)
+//                 {
+//                     continue;
+//                 }
+//                 if(grid[i][j+2]+grid[i+1][j+1]+grid[i+2][j]!=15)
+//                 {
+//                     continue;
+//                 }
+//                 count++;
+//             }
+//         }
+//         return count;
+//     }
+//}
+
+class Solution {
+    public int numMagicSquaresInside(int[][] grid) {
+        //my solution beats 57%, without using set, it will be faster
+        int row=grid.length,col=grid[0].length;
+        int count=0;
+        for(int i=0;i<row-2;i++)
+        {
+            for(int j=0;j<col-2;j++)
+            {
+                boolean flag=true;
+                int[] store=new int[9];
+                for(int m=0;m<3;m++)
+                {
+                    for(int n=0;n<3;n++)
+                    {
+                        if(grid[i+m][j+n]<=9&&grid[i+m][j+n]>=1)
+                        {
+                            store[grid[i+m][j+n]-1]=1;
+                        }
+                    }
+                }
+                for(int p:store)
+                {
+                    if(p==0)
+                    {
+                        flag=false;
+                        break;
+                    }
+                }
+                if(flag==false)
+                {
+                    continue;
+                }
+                boolean secflag=true;
+                //current grid[i][j] is peak of each grid
+                for(int r=0;r<3;r++)
+                {
+                    if(grid[i+r][j]+grid[i+r][j+1]+grid[i+r][j+2]!=15)
+                    {
+                        secflag=false;
+                        break;
+                    }
+                    if(grid[i][j+r]+grid[i+1][j+r]+grid[i+2][j+r]!=15)
+                    {
+                        secflag=false;
+                        break;
+                    }
+                }
+                if(secflag==false)
+                {
+                    continue;
+                }
+                if(grid[i][j]+grid[i+1][j+1]+grid[i+2][j+2]!=15)
+                {
+                    continue;
+                }
+                if(grid[i][j+2]+grid[i+1][j+1]+grid[i+2][j]!=15)
+                {
+                    continue;
+                }
+                count++;
+            }
+        }
+        return count;
+    }
+}

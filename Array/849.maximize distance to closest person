@@ -1,0 +1,60 @@
+// class Solution {
+//     public int maxDistToClosest(int[] seats) {
+//         //my solution beats 44%
+//         List<Integer> point=new ArrayList<Integer>();
+        
+//         for(int i=0;i<seats.length;i++)
+//         {
+//             if(seats[i]==1)
+//             {
+//                 point.add(i);
+//             }
+//         }
+        
+//         int[] store=new int[point.size()];
+//         int max=0;
+//         for(int i=0;i<point.size();i++)
+//         {
+//             store[i]=point.get(i);
+//         }
+//         for(int i=0;i<store.length-1;i++)
+//         {
+//             int diff=store[i+1]-store[i];
+//             if(diff>max)
+//             {
+//                 max=diff;
+//             }
+//         }
+//         if(store[0]>max/2||seats.length-store[store.length-1]-1>max/2)
+//         {
+//             if(store[0]>seats.length-store[store.length-1]-1)  return store[0];
+//             else return seats.length-store[store.length-1]-1;
+//         }
+//         return max/2;
+//     }
+// }
+
+class Solution {
+    public int maxDistToClosest(int[] seats) {
+        //count directly solution beats 100%
+        int max=0;
+        int start=0,end=seats.length-1;
+        int count=0;
+        while(start<seats.length-1&&seats[start]==0) start++;
+        while(end>0&&seats[end]==0) end--;
+        max=Math.max(max,start);
+        max=Math.max(max,seats.length-1-end);
+        for(int i=start;i<end;i++)
+        {
+            if(seats[i]==0)
+            {
+                count++;
+                max=Math.max(max,(count+1)/2);
+            }
+            else{
+                count=0;
+            }
+        }
+        return max;
+    }
+}

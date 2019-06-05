@@ -1,0 +1,84 @@
+// class Solution {
+//     public int minSubArrayLen(int s, int[] nums) {
+//my wrong solution
+//         int left=0,right=nums.length-1;
+//         int sum=0;
+//         for(int i=0;i<nums.length;i++)
+//         {
+//             sum+=nums[i];
+//         }
+//         if(sum<s)
+//         {
+//             return 0;
+//         }
+//         int res=nums.length;
+//         while(left<right)
+//         {
+//             if(nums[left]<=nums[right])
+//             {
+//                 sum-=nums[left];
+//                 left++;
+//             }
+//             else if(nums[left]>nums[right])
+//             {
+//                 sum-=nums[right];
+//                 right--;
+//             }
+//             if(sum>=s)
+//             {
+//                 res--;
+//             }
+//             else{
+//                 break;
+//             }
+//         }
+//         return res;
+//     }
+// }
+
+class Solution {
+    public int minSubArrayLen(int s, int[] nums) {
+        // //O(n) sliding window solution
+        int slow=0,fast=0;
+        int sum=0,min=Integer.MAX_VALUE;
+        while(fast<nums.length)
+        {
+            sum+=nums[fast];
+            while(sum>=s)
+            {
+                min=Math.min(fast-slow+1,min);
+                sum-=nums[slow++];
+            }
+            fast++;
+        }
+        return min==Integer.MAX_VALUE?0:min;
+        
+        //O(nlogn) solution, more complex than O(n)
+        // int[] subsum=new int[nums.length+1];
+        // subsum[0]=0;
+        // int min=Integer.MAX_VALUE;
+        // for(int i=1;i<subsum.length;i++)
+        // {
+        //     subsum[i]=subsum[i-1]+nums[i-1];
+        // }
+        // for(int i=1;i<subsum.length;i++)
+        // {
+        //     int lo=i;
+        //     int hi=subsum.length-1;
+        //     while(lo<=hi)
+        //     {
+        //         int mid=lo+(hi-lo)/2;
+        //         int subarraysum=subsum[mid]-subsum[i-1];
+        //         if(subarraysum>=s)
+        //         {
+        //             min=Math.min(min,mid-i+1);
+        //             hi=mid-1;
+        //         }
+        //         else{
+        //             lo=mid+1;
+        //         }
+        //     }
+        // }
+        // return min==Integer.MAX_VALUE?0:min;
+    }
+}

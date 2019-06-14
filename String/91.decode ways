@@ -1,0 +1,106 @@
+// class Solution {
+//     HashMap<String,Integer> map=new HashMap<String,Integer>();//take care
+//     public int numDecodings(String s) {
+//         //recursion solution
+//        //O(n^2)
+//         map.put("",1);
+//         return helper(s);
+//     }
+    
+//     public int helper(String s)
+//     {
+//         if(map.containsKey(s)) return map.get(s);
+//         char[] sc=s.toCharArray();
+//         if(sc[0]=='0') 
+//         {
+//             return 0;
+//         }
+//         if(s.length()==1)
+//         {
+//             return 1;
+//         }
+//         int res=helper(s.substring(1));
+//         String prefix=s.substring(0,2);
+//         int pre=Integer.valueOf(prefix);
+//         if(pre>=1&&pre<=26)
+//         {
+//             res+=helper(s.substring(2));
+//         }
+//         map.put(s,res);
+//         return res;
+//     }
+// }
+
+// class Solution {
+//     HashMap<Integer,Integer> map=new HashMap<Integer,Integer>();//take care
+//     public int numDecodings(String s) {
+//         //O(n) recursion solution
+//         return helper(s,0,s.length()-1);
+//     }
+    
+//     public int helper(String s,int l,int r)
+//     {
+//         if(map.containsKey(l)) return map.get(l);
+//         char[] sc=s.toCharArray();
+//         if(l<=r&&sc[l]=='0')
+//         {
+//             return 0;
+//         }
+//         if(l>=r)
+//         {
+//             return 1;
+//         }
+//         int res=helper(s,l+1,r);
+//         String prefix=s.substring(l,l+2);
+//         int pre=Integer.valueOf(prefix);
+//         if(pre>=1&&pre<=26)
+//         {
+//             res+=helper(s,l+2,r);
+//         }
+//         map.put(l,res);
+//         return res;
+//     }
+// }
+
+class Solution {
+    public int numDecodings(String s) {
+        //dp solution 
+        if(s.length()==0||s.charAt(0)=='0') return 0;
+        if(s.length()==1) return 1;
+       int dp1=1,dp2=1;
+        char[] sc=s.toCharArray();
+        for(int i=1;i<s.length();i++)
+        {
+            int dp=0;
+            if(!isvalid(sc[i])&&!isValid(sc[i-1],sc[i])) return 0;
+            if(isvalid(sc[i]))
+            {
+                dp+=dp1;
+            }
+            if(isValid(sc[i-1],sc[i]))
+            {
+                dp+=dp2;
+            }
+            dp2=dp1;
+            dp1=dp;
+        }
+        return dp1;
+    }
+    public boolean isvalid(char s)
+    {
+        if(s!='0') return true;
+        else return false;
+    }
+    public boolean isValid(char s1,char s2)
+    {
+        int num1=s1-'0';
+        int num2=s2-'0';
+        int num=num1*10+num2;
+        if(num>=10&&num<=26)
+        {
+            return true;
+        }
+        else return false;
+    }
+    
+}

@@ -1,0 +1,54 @@
+class Solution {
+    List<List<String>> res;
+    ArrayList<String> curr;
+    public List<List<String>> partition(String s) {
+        res=new ArrayList<List<String>>();
+        curr=new ArrayList<String>();
+        helper(s,0);
+        return res;
+    }
+    
+    public void helper(String s,int l)
+    {
+        if(curr.size()>0&&l>=s.length())
+        {
+            List<String> r = (ArrayList<String>) curr.clone();//take care: arraylist instead of list
+            res.add(r);//must clone instead of res.add(curr) directly
+            //res.add(curr);
+            return;
+        }
+        for(int i=l;i<s.length();i++)
+        {
+            if(isPalindrome(s,l,i))
+            {
+                if(i==l)
+                {
+                 curr.add(Character.toString(s.charAt(i)));
+                }
+                else if(i!=l)
+                {
+                    curr.add(s.substring(l,i+1));
+                }
+                helper(s,i+1);
+                curr.remove(curr.size()-1);
+            }
+        }
+    }
+    public boolean isPalindrome(String s,int l,int r)
+    {
+        if(l==r)
+        {
+            return true;
+        }
+        else{
+            while(l<r)
+            {
+                if(s.charAt(l)!=s.charAt(r)) return false;
+                l++;
+                r--;
+            }
+            return true;
+        }
+    }
+    
+}

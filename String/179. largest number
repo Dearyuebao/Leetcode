@@ -1,0 +1,38 @@
+class Solution {
+    public String largestNumber(int[] nums) {
+        if(nums==null||nums.length==0)
+        {
+            return "";
+        }
+        String[] num=new String[nums.length];
+        for(int i=0;i<nums.length;i++)
+        {
+            num[i]=String.valueOf(nums[i]);
+        }
+        
+        //combine 9 with any other one, we put 9 in the front is bigger.
+        Comparator<String> comp=new Comparator<String>(){
+            @Override
+            public int compare(String str1,String str2)
+            {
+                String s1=str1+str2;
+                String s2=str2+str1;
+                return s2.compareTo(s1);
+            }
+        };
+        
+        //"string"  'char'
+         Arrays.sort(num,comp);
+        if(num[0].charAt(0)=='0')
+        {
+            return "0";//take care
+        }
+        
+         StringBuilder res=new StringBuilder();
+        for(int i=0;i<num.length;i++)
+        {
+            res.append(num[i]);
+        }
+        return res.toString();
+    }
+}

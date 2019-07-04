@@ -1,0 +1,55 @@
+// class Solution {
+//     public String reverseWords(String s) {
+//         //split, trim is the core of solving this problem
+//         String[] sarr=s.split("\\s+");//"\\s+" means one or more spaces
+//         StringBuilder res=new StringBuilder();
+//         for(int i=sarr.length-1;i>=0;i--)
+//         {
+//             res.append(sarr[i]+" ");
+//         }
+//         return res.toString().trim();
+//     }
+// }
+
+class Solution {
+    public String reverseWords(String s) {
+        //no split, no trim, no stringbuilder, two pointers solution
+        char[] sc=s.toCharArray();
+        reverse(sc,0,sc.length-1);
+        reverseeach(sc,sc.length);
+        return removespace(sc,sc.length);
+    }
+    
+    public void reverse(char[] sc,int i,int j)
+    {
+        while(i<j)
+        {
+            char t=sc[i];
+            sc[i++]=sc[j];
+            sc[j--]=t;
+        }
+    }
+    
+    public void reverseeach(char[] sc,int n)
+    {
+        int i=0,j=0;
+        while(i<n)
+        {
+            while(i<j||(i<n&&sc[i]==' ')) i++;
+            while(j<i||(j<n&&sc[j]!=' ')) j++;
+            reverse(sc,i,j-1);
+        }
+    }
+    public String removespace(char[] sc,int n)
+    {
+        int i=0,j=0;
+        while(j<n)
+        {
+            while(j<n&&sc[j]==' ') j++;
+            while(j<n&&sc[j]!=' ') sc[i++]=sc[j++];
+            while(j<n&&sc[j]==' ') j++;
+            if(j<n) sc[i++]=' ';
+        }
+        return new String(sc).substring(0,i);
+    }
+}

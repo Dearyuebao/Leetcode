@@ -1,0 +1,39 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    //my soulution beats 100%
+    int sum=0;
+    public int sumNumbers(TreeNode root) {
+        if(root==null)
+        {
+            return 0;
+        }
+        helper(root,0);
+        return sum;
+    }
+    public void helper(TreeNode root,int subsum)
+    {
+        if(root.left==null&&root.right==null)
+        {
+            subsum=subsum*10+root.val;
+            sum+=subsum;
+            return;
+        }
+        subsum=subsum*10+root.val;
+        if(root.left!=null)
+        {
+            helper(root.left,subsum);
+        }
+        if(root.right!=null)
+        {
+            helper(root.right,subsum);
+        }
+    }
+}

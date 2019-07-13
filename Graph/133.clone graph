@@ -1,0 +1,82 @@
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public List<Node> neighbors;
+
+    public Node() {}
+
+    public Node(int _val,List<Node> _neighbors) {
+        val = _val;
+        neighbors = _neighbors;
+    }
+};
+*/
+class Solution {
+    //50% solution: clone node first and then add their neighbors
+    public Node cloneGraph(Node node) {
+        if(node==null) return null;
+        LinkedList<Node> queue=new LinkedList<Node>();
+        HashMap<Node,Node> map=new HashMap<Node,Node>();
+        
+        queue.offer(node);
+        map.put(node,null);
+        while(queue.size()>0)
+        {
+            Node curr=queue.pop();
+            Node copy=new Node(curr.val,new ArrayList<Node>());//take care:we cannot just add curr.val
+            map.put(curr,copy);
+            for(Node next:curr.neighbors)
+            {
+                if(!map.containsKey(next))
+                {
+                    queue.offer(next);
+                    map.put(next,null);
+                }
+            }
+        }
+        
+        
+        for(Node ori:map.keySet())
+        {
+            Node cpy=map.get(ori);
+            for(Node nei:ori.neighbors)
+            {
+                cpy.neighbors.add(map.get(nei));
+            }
+        }
+        return map.get(node);
+    }
+}
+
+
+
+//idea is :
+// 1.Keep a HashMap from old to new. This will also serve the purpose of tracking visitors.
+// 2.Do a DFS
+// 3.if node is already visited, we'll have an entry in map.return that.
+// 4.otherwise construct node, add to map.
+// 5.for all neighbors of node above copy graph.
+//100%: clone node and neighbors at the same time
+// class Solution{
+//     Map<Node,Node> visited=new HashMap<Node,Node>();
+//     public Node cloneGraph(Node node)
+//     {
+//         if(visited.get(node)!=null)
+//         {
+//             return visited.get(node);
+//         }
+//         if(node==null)
+//         {
+//             return null;
+//         }
+//         List<Node> neighbor=new ArrayList<Node>();
+//         Node cpy=new Node(node.val,neighbor);
+//         visited.put(node,cpy);
+//         for(Node nei:node.neighbors)
+//         {
+//             neighbor.add(cloneGraph(nei));
+//         }
+//         return visited.get(node);
+//     }
+// }

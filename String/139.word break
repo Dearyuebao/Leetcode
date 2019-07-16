@@ -1,0 +1,49 @@
+// class Solution {
+//recursion and memorization solution, only beats 5%
+//     Map<String,Boolean> mem=new HashMap<>();
+//     public boolean wordBreak(String s, List<String> wordDict) {
+//         return helper(s,wordDict);
+//     }
+    
+//     public boolean helper(String s,List<String> wordDict)
+//     {
+//         if(mem.containsKey(s))
+//         {
+//             return mem.get(s);
+//         }
+//         if(wordDict.contains(s))
+//         {
+//             return true;
+//         }
+//         for(int i=0;i<s.length();i++)
+//         {
+//             String s1=s.substring(0,i);
+//             String s2=s.substring(i);
+//             if(helper(s1,wordDict)&&helper(s2,wordDict))
+//             {
+//                 return true;
+//             }
+//             mem.put(s,false);
+//         }
+//         return false;
+//     }
+// }
+
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        boolean[] dp=new boolean[s.length()+1];
+        dp[0]=true;
+        for(int i=1;i<=s.length();i++)
+        {
+            for(int j=0;j<i;j++)
+            {
+                if(dp[j]&&wordDict.contains(s.substring(j,i)))
+                {
+                    dp[i]=true;
+                    break;
+                }
+            }
+        }
+        return dp[s.length()];
+    }
+}

@@ -1,0 +1,96 @@
+class LRUCache {
+
+    HashMap<Integer,LinkedNode> cache=new HashMap<>();
+    LinkedNode head,tail;
+    int count;
+    int capacity;
+    
+    class LinkedNode{
+        int key;
+        int val;
+        
+        LinkedNode pre;
+        LinkedNode post;
+    }
+    
+    public void addNode(LinkedNode node)
+    {
+        node.pre=head;
+        node.post=head.post;
+        
+        head.post.pre=node;
+        head.post=node;
+    }
+    
+    public void removeNode(LinkedNode node)
+    {
+        LinkedNode prenode=node.pre;
+        LinkedNode postnode=node.post;
+        
+        prenode.post=postnode;
+        postnode.pre=prenode;
+    }
+    
+    public void movetohead(LinkedNode node)
+    {
+        this.removeNode(node);
+        this.addNode(node);
+    }
+    
+    public LinkedNode poptail(){
+        LinkedNode pretail=tail.pre;
+        this.removeNode(pretail);
+        return pretail;
+    }
+    
+    public LRUCache(int capacity) {
+        this.count=0;
+        this.capacity=capacity;
+        head=new LinkedNode();
+        head.pre=null;
+        tail=new LinkedNode();
+        tail.post=null;
+        head.post=tail;
+        tail.pre=head;
+    }
+    
+    public int get(int key) {
+        LinkedNode node=cache.get(key);
+        if(node==null)
+        {
+            return -1;
+        }
+        this.movetohead(node);
+        return node.val;
+    }
+    
+    public void put(int key, int value) {
+        LinkedNode node=cache.get(key);
+        if(node==null)
+        {
+            LinkedNode newnode=new LinkedNode();
+            newnode.key=key;
+            newnode.val=value;
+            cache.put(key,newnode);//this.cache.put()?
+            this.addNode(newnode);
+            count++;
+            if(count>capacity)
+            {
+                LinkedNode tail=this.poptail();
+                cache.remove(tail.key);//this.cache.remove()?
+                count--;
+            }
+        }
+        else{
+            node.val=value;
+            this.movetohead(node);
+        }
+    }
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */

@@ -1,0 +1,130 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+
+// public class Solution {
+  
+//   public ListNode sortList(ListNode head) {
+//     if (head == null || head.next == null)
+//       return head;
+//       ListNode pre=null,slow=head,fast=head;
+//       while(fast!=null&&fast.next!=null)
+//       {
+//           pre=slow;
+//           fast=fast.next.next;
+//           slow=slow.next;
+//       }
+//       pre.next=null;
+      
+//       ListNode l1=sortList(head);
+//       ListNode l2=sortList(slow);
+  
+//     return merge(l1, l2);
+//   }
+  
+//   ListNode merge(ListNode l1, ListNode l2) {
+//     ListNode l = new ListNode(0), p = l;
+    
+//     while (l1 != null && l2 != null) {
+//       if (l1.val < l2.val) {
+//         p.next = l1;
+//         l1 = l1.next;
+//       } else {
+//         p.next = l2;
+//         l2 = l2.next;
+//       }
+//       p = p.next;
+//     }
+    
+//     if (l1 != null)
+//       p.next = l1;
+    
+//     if (l2 != null)
+//       p.next = l2;
+    
+//     return l.next;
+//   }
+
+// }
+
+class Solution{
+    public ListNode sortList(ListNode head)
+    {
+        if(head==null||head.next==null)
+        {
+            return head;
+        }
+        ListNode dummy=new ListNode(0);
+        dummy.next=head;
+        int len=0;
+        while(head!=null)
+        {
+            len++;
+            head=head.next;
+        }
+        for(int step=1;step<len;step<<=1)
+        {
+            ListNode pre=dummy;
+            ListNode curr=dummy.next;
+            while(curr!=null)
+            {
+                ListNode left=curr;
+                ListNode right=split(left,step);
+                curr=split(right,step);
+                pre=merge(left,right,pre);
+            }
+        }
+        return dummy.next;
+    }
+    
+    public ListNode split(ListNode l,int step)
+    {
+        if(l==null)
+        {
+            return null;
+        }
+        for(int i=1;l.next!=null&&i<step;i++)
+        {
+            l=l.next;
+        }
+        ListNode right=l.next;
+        l.next=null;
+        return right;
+    }
+    
+    public ListNode merge(ListNode left,ListNode right,ListNode pre)
+    {
+        ListNode curr=pre;
+        while(left!=null&&right!=null)
+        {
+            if(left.val<right.val)
+            {
+                curr.next=left;
+                left=left.next;
+            }
+            else{
+                curr.next=right;
+                right=right.next;
+            }
+            curr=curr.next;//don't forget
+        }
+        if(left!=null)
+        {
+            curr.next=left;
+        }
+        else if(right!=null)
+        {
+            curr.next=right;
+        }
+        while(curr.next!=null)
+        {
+            curr=curr.next;
+        }
+        return curr;
+    }
+}

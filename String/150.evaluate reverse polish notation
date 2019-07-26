@@ -1,0 +1,62 @@
+// class Solution {
+//     public int evalRPN(String[] tokens) {
+//         int front=0,back=0;
+//         Stack<Integer> stack=new Stack<>();
+//         for(String s:tokens)
+//         {
+//             if(s.equals("+"))
+//             {
+//                 stack.add(stack.pop()+stack.pop());
+//             }
+//             else if(s.equals("-")){
+//                 front=stack.pop();
+//                 back=stack.pop();
+//                 stack.add(back-front);
+//             }
+//             else if(s.equals("*"))
+//             {
+//                 stack.add(stack.pop()*stack.pop());
+//             }
+//             else if(s.equals("/"))
+//             {
+//                 front=stack.pop();
+//                 back=stack.pop();
+//                 stack.add(back/front);
+//             }
+//             else{
+//                 stack.add(Integer.parseInt(s));
+//             }
+//         }
+//         return stack.pop();
+//     }
+// }
+
+class Solution {
+    public int evalRPN(String[] tokens) {
+        Deque<Integer> deque = new LinkedList<>();
+        for (String s: tokens) {
+            if (s.equals("*") || s.equals("/") || s.equals("+") || s.equals("-")) {
+                int right = deque.removeFirst();
+                int left = deque.removeFirst();
+                if (s.equals("*")) {
+                    deque.addFirst(left * right);
+                }
+                if (s.equals("/")) {
+                    deque.addFirst(left / right);
+                }
+                
+                if (s.equals("+")) {
+                    deque.addFirst(left + right);
+                }
+                
+                if (s.equals("-")) {
+                    deque.addFirst(left - right);
+                }
+                
+            } else {
+                deque.addFirst(Integer.valueOf(s));
+            }
+        }
+        return deque.peekFirst();
+    }
+}

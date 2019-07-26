@@ -1,0 +1,16 @@
+public class Solution {
+    public int titleToNumber(String s) {
+        int res=0;
+        char[] sc=s.toCharArray();
+        for(int i=0;i<s.length();i++)
+        {
+            res=res*26+sc[i]-'A'+1;
+        }
+        return res;
+    }
+}
+
+
+//ABC AB 26*1+2 ABC 26+26*26+26+3=26*(26*1+2)+3;
+//9 jinzhi:123 12 9*1+2=11 123=11*9+3=102  9+9*9+9+3=93
+ 

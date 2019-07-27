@@ -1,0 +1,19 @@
+class Solution {
+    public int trailingZeroes(int n) {
+        //my wrong solution: we don't need to calculate the result of factorial, this will exceed the           //limit
+        // long fac=1;
+        // for(int i=1;i<=n;i++)
+        // {
+        //     fac*=i;
+        // }
+        // int count=0;
+        // while(fac%10==0)
+        // {
+        //     count++;
+        //     fac/=10;
+        // }
+        // return count;
+        
+        return n==0?0:n/5+trailingZeroes(n/5);
+    }
+}

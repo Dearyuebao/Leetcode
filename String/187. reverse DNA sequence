@@ -1,0 +1,81 @@
+//class Solution {
+    // public List<String> findRepeatedDnaSequences(String s) {
+    //     //my solution beats 78%, so slow
+    //     Set<String> set=new HashSet<String>();
+    //     List<String> res=new ArrayList<String>();
+    //     Set<String> visited=new HashSet<>();
+    //     int len=s.length()-10;
+    //     for(int i=0;i<=len;i++)
+    //     {
+    //         String sub=s.substring(i,i+10);
+    //         if(set.contains(sub))
+    //         {
+    //             if(!visited.contains(sub))
+    //             {
+    //                 res.add(sub);
+    //                 visited.add(sub);
+    //             }
+    //         }
+    //         else{
+    //             set.add(sub);
+    //         }
+    //     }
+    //     return res;
+    // }
+    
+//     public List<String> findRepeatedDnaSequences(String s) {
+//         //my solution beats 78%, so slow
+//         Set<String> set=new HashSet<String>();
+//         Set<String> visited=new HashSet<>();
+//         int len=s.length()-10;
+//         for(int i=0;i<=len;i++)
+//         {
+//             String sub=s.substring(i,i+10);
+//             // if(set.contains(sub))
+//             // {
+//             //     if(!visited.contains(sub))
+//             //     {
+//             //         visited.add(sub);
+//             //     }
+//             // }
+//             // else{
+//             //     set.add(sub);
+//             // }
+//             if(!set.add(sub))
+//                 //if set already contains a, when we want to add a to set again, it will return false
+//             {
+//                 visited.add(sub);
+//             }
+//         }
+//         return new ArrayList(visited);
+//     }
+// }
+
+public class Solution{
+public List<String> findRepeatedDnaSequences(String s) {
+        int len = s.length(), cur = 0;
+        if(len < 10) return new ArrayList();
+        
+        Set seen = new HashSet();
+        Set repeated = new HashSet();
+        HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+        map.put('A',0);  map.put('C',1);  map.put('G',2);  map.put('T',3);
+        
+     
+        
+         for(int i = 0; i < 9; i++){
+             cur = (cur << 2) | map.get(s.charAt(i));
+         }
+        
+        for(int i = 9; i < len; i++){
+            cur = ((cur & 0x3ffff) << 2) | map.get(s.charAt(i));
+            if(!seen.add(cur)){
+                repeated.add(s.substring(i - 9, i + 1));
+            }  
+        }
+        
+        return new ArrayList(repeated);
+    }
+}
+    
+    

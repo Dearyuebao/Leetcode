@@ -1,0 +1,51 @@
+class Solution {
+    public int nthUglyNumber(int n) {
+        int[] ugly=new int[n];
+        ugly[0]=1;
+        int f1=2,f2=3,f3=5;
+        int i1=0,i2=0,i3=0;//brilliant!!!it is hard to think
+        for(int i=1;i<n;i++)
+        {
+            int min=Math.min(Math.min(f1,f2),f3);
+            ugly[i]=min;
+            if(f1==min)
+            {
+                f1=2*ugly[++i1];
+            }
+            if(f2==min)
+            {
+                f2=3*ugly[++i2];   
+            }
+            if(f3==min)
+            {
+                f3=5*ugly[++i3];
+            }
+        }
+        return ugly[n-1];
+        
+        //my solution tle
+        // int count=0;
+        // int i=1;
+        // while(count<n)//i=1,count=1 2,2 3,3 4,4 5,5 6,6 7,6 8,7 9,8 10,9 11,9 12,10 13
+        // {
+        //     if(isugly(i))
+        //     {
+        //         count++;//count=1,ugly1 2,2 3,3 4,4 5,5 6,6 7,6 8,7 9,8 10,9 11,9 12,10 i=13
+        //     }
+        //     i++;
+        // }
+        // return --i;//--i means minus at this time, but i-- means minus at next time
+    }
+    
+    // public boolean isugly(int num)
+    // {
+    //     for(int i=2;i<6&num>0;i++)
+    //     {
+    //         while(num%i==0)
+    //         {
+    //             num/=i;
+    //         }
+    //     }
+    //     return num==1;
+    // }
+}

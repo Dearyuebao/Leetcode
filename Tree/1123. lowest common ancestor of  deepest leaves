@@ -1,0 +1,110 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+
+// class Solution {
+    
+//     TreeNode node;
+//     public TreeNode lcaDeepestLeaves(TreeNode root) {
+//         //find the depth=depth of deepest leaves
+//         //find whether there is a node in depth of depth-1 and node.left!=null&&node.right!=null
+//         //if there is such a node, return it; if not, return the deepest node
+//         if(root==null)
+//         {
+//             return null;
+//         }
+//         int[] deep=new int[1];
+//         deep[0]=0;
+//         find(root,0,deep);
+//         int thedepth=deep[0]-1;
+        
+        
+        
+//         helper(root,0,thedepth);
+        
+//        // if(node==null)
+//         //{
+//         //root has changed, how could we input the original root? how to deep copy the treenode?
+//            // corner(root,0,deep[0]);
+//        // }
+//         //or avoid the corner function and do it in find
+        
+//         return node;
+//     }
+    
+//     public void find(TreeNode root,int depth,int[] deep)
+//     {
+//         if(root!=null)
+//         {
+//             if(deep[0]<depth)
+//             {
+//                 node=root;
+//             }
+//             deep[0]=Math.max(deep[0],depth);
+//         }
+//         else{
+//             return;
+//         }
+//         find(root.left,depth+1,deep);
+//         find(root.right,depth+1,deep);
+//     }
+    
+//     public void helper(TreeNode root,int depth,int thedepth)
+//     {
+//         if(root==null)
+//         {
+//             return;
+//         }
+//         if(depth==thedepth&&root.left!=null&&root.right!=null)
+//         {
+//             node=root;
+//         }
+        
+//         helper(root.left,depth+1,thedepth);
+//         helper(root.right,depth+1,thedepth);
+//     }
+    
+    
+//     //but it is still wrong, [1,2,null,3,4,null,6,null,5]
+//     //[2,3,4,null,6,null,5] is expected
+//     // I don't know the problem well, why expect this?
+    
+//     //maybe we need a function to find the father node directly
+//     //find the deepest node and find their common lowest root
+    
+// }
+
+
+//the most important thing is understanding the meaning of problem
+class Solution{
+
+    int deep=0;
+    TreeNode node;
+
+    public TreeNode lcaDeepestLeaves(TreeNode root) {
+        helper(root,0);
+        return node;
+    }
+    
+    public int helper(TreeNode root,int depth)
+    {
+        if(root==null)
+        {
+            return depth-1;
+        }
+        deep=Math.max(deep,depth);
+        int left=helper(root.left,depth+1);
+        int right=helper(root.right,depth+1);
+        if(left==deep&&right==deep)
+        {
+            node=root;
+        }
+        return Math.max(left,right);
+    }
+}

@@ -1,0 +1,46 @@
+class Solution {
+    public boolean canWinNim(int n) {
+        //dp?
+        //my turn:      n
+        //your turn:n-1 n-2 n-3
+        //my:    n-2 n-3 n-4 n-5 n-6
+        //your:n-3 n-4 n-5 n-6 n-7 n-8 n-9
+        //my:n-4 n-6 n-8 n-10 ...........n-11
+        //win strategy: leave the four condition to others
+        //each time leave the rest equals to 4x(x=1,2,.....)
+        //find the biggest 4x<n
+        //if 4x+1 4x+2 4x+3=n true else false
+        
+        //my TLE solution
+        // int times=1;
+        // while(4*times<=n)
+        // {
+        //     times++;
+        // }
+        // times--;
+        // int maxt=4*times;
+        // if((maxt+1==n)||(maxt+2==n)||(maxt+3==n))
+        // {
+        //     return true;
+        // }
+        // else{
+        //     return false;
+        // }
+        
+        
+        //my solution beats 100%
+        int times=n/4;
+        if(n%4==0)
+        {
+            return false;
+        }
+        int maxt=times*4;
+        if((maxt+1==n)||(maxt+2==n)||(maxt+3==n))
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+}

@@ -1,0 +1,79 @@
+// class Solution {
+//     public boolean wordPattern(String pattern, String str) {
+//         //my solution beats 15%
+//         String[] st=str.split("\\s+");
+//         char[] pa=pattern.toCharArray();
+//         Set<String> set=new HashSet<>();
+        
+//         if(st.length!=pa.length)
+//         {
+//             return false;
+//         }//corner case
+//         Map<Character,String> map=new HashMap<>();//take care !char is not okay
+        
+//         for(int i=0;i<st.length;i++)
+//         {
+//             if(!map.containsKey(pa[i]))
+//             {
+//                 if(set.contains(st[i]))
+//                 {
+//                     return false;
+//                 }
+//                 map.put(pa[i],st[i]);
+//                 set.add(st[i]);
+//             }
+//             else{
+//                 if(!st[i].equals(map.get(pa[i])))
+//                 {
+//                     return false;
+//                 }
+//             }
+//         }
+//         return true;
+//     }
+// }
+
+//"abba"
+//"dog dog dog dog"
+
+class Solution{
+public boolean wordPattern(String pattern, String str) {
+    String[] word=str.split(" ");
+    char[] pa=pattern.toCharArray();
+    if(pa.length!=word.length)
+    {
+        return false;
+    }
+    
+    Map map=new HashMap();
+    for(Integer i=0;i<pa.length;i++)//take care:only Integer not int, cuz we have to add it into map
+    {
+        if(map.put(pattern.charAt(i),i)!=map.put(word[i],i))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+//     public boolean wordPattern(String pattern, String str) {
+//     String[] words = str.split(" ");
+//     if (words.length != pattern.length())
+//         return false;
+//     Map index = new HashMap();
+//     for (Integer i=0; i<words.length; ++i)
+//         if (index.put(pattern.charAt(i), i) != index.put(words[i], i))
+//             return false;
+//     return true;
+// }
+}
+
+//new knowledge:map.put() return s to the pre value, if the pre is null, return null;
+//  private Map<Bookmark, Integer> mDevice = new HashMap<String, Integer>();
+
+//     String abc = "two"
+//     Integer ret = mDevice.put(abc, ONLINE);
+// Am I correct in saying the following:
+
+// if abc key already exists with value OFFLINE, ret is equal to OFFLINE.
+// if abc key already exists with value ONLINE, ret is equal to ONLINE.
+// if abc key did not exist, then ret is equal to null.

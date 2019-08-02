@@ -1,0 +1,80 @@
+// class Solution {
+//     //my solution beats 31%
+//     public String getHint(String secret, String guess) {
+//         char[] key=secret.toCharArray();
+//         char[] gue=guess.toCharArray();
+//         int a=0,b=0;
+//         Map<Integer,Integer> map=new HashMap<>();
+        
+//         StringBuilder newgu=new StringBuilder();
+//         int n=key.length;
+//         for(int i=0;i<n;i++)
+//         {
+//             if(key[i]==gue[i])
+//             {
+//                 a+=1;
+//             }
+//             else{
+//                 map.put(key[i]-'0',map.getOrDefault(key[i]-'0',0)+1);
+//                 newgu.append(String.valueOf(gue[i]-'0'));
+//             } 
+//         }
+        
+//         String cow=newgu.toString();
+//         char[] cowc=cow.toCharArray();
+//         int l=cowc.length;
+//         for(int i=0;i<l;i++)
+//         {
+//             if(map.containsKey(cowc[i]-'0')&&map.get(cowc[i]-'0')>0)
+//             {
+//                 b+=1;
+//                 map.put(cowc[i]-'0',map.get(cowc[i]-'0')-1);
+//             }
+//         }
+//         StringBuilder res=new StringBuilder();
+//         res.append(String.valueOf(a));
+//         res.append("A");
+//         res.append(String.valueOf(b));
+//         res.append("B");
+//         return res.toString();
+//     }
+// }
+
+class Solution{
+public String getHint(String secret, String guess) {
+    int bulls=0;
+    int cow=0;
+    int[] nums=new int[10];
+    char[] se=secret.toCharArray();
+    char[] gu=guess.toCharArray();
+    int n=se.length;
+    
+    for(int i=0;i<n;i++)
+    {
+        if(se[i]==gu[i])
+        {
+            bulls++;
+        }
+        else{
+            if(nums[se[i]-'0']<0) cow++;
+            if(nums[gu[i]-'0']>0) cow++;
+            nums[se[i]-'0']++;
+            nums[gu[i]-'0']--;
+        }
+    }
+        StringBuilder res=new StringBuilder();
+        res.append(String.valueOf(bulls));
+        res.append("A");
+        res.append(String.valueOf(cow));
+        res.append("B");
+        return res.toString();
+}
+}
+//1 1 2 3
+//0 1 1 1
+//num[1]=1 num[0]=-1
+//num[2]=1 num[1]=0 num[1]>0
+
+
+
+

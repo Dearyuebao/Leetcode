@@ -1,0 +1,22 @@
+class Solution {
+    public int maxProfit(int[] prices) {
+        //dp,state machine(draw picture)
+        int n=prices.length;
+        int[] rest=new int[n+1];
+        int[] hold=new int[n+1];
+        int[] sold=new int[n+1];
+        
+        rest[0]=0;
+        hold[0]=(-1)*Integer.MAX_VALUE;
+        sold[0]=0;
+        
+        for(int i=1;i<=n;i++)
+        {
+            rest[i]=Math.max(sold[i-1],rest[i-1]);
+            hold[i]=Math.max(hold[i-1],rest[i-1]-prices[i-1]);
+            sold[i]=hold[i-1]+prices[i-1];
+        }
+        
+        return Math.max(rest[n],sold[n]);
+    }
+}

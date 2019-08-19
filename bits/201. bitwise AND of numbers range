@@ -1,0 +1,42 @@
+class Solution {
+    public int rangeBitwiseAnd(int m, int n) {
+        //TLE solution  directly;
+        // int res=m;
+        // while(m<n)
+        // {
+        //     m+=1;
+        //     res&=m;
+        // }
+        // return res;
+        
+        //just find the same prefix, for the remaining will cause result corresponding bit to zero
+        //<< >> are brilliant
+        // int bit=0;
+        // while(m!=n)
+        // {
+        //     m>>=1;
+        //     n>>=1;
+        //     bit++;
+        // }
+        // return m<<bit;
+        
+        
+        if(m==0||n==0)
+        {
+            return m;
+        }
+        long r=1;
+        while((r<<1)<=n)
+        {
+            if((r<<1)>m)
+            {
+                return 0;
+            }
+            r<<=1;
+        }
+        return (int)r+ rangeBitwiseAnd(m-(int)r,n-(int)r);
+    }
+}
+
+//101 110 111 ->100
+//00 01->00

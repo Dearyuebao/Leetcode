@@ -1,0 +1,46 @@
+//my recursive solution recursive beats 60%
+// class Solution {
+//     Set<Integer> set=new HashSet<Integer>();
+    
+//     public boolean isHappy(int n) {
+//         if(set.contains(n))
+//         {
+//             return false;
+//         }
+//         set.add(n);
+//         int sum=0;
+//         while(n>0)
+//         {
+//             int curr=n%10;
+//             int square=curr*curr;
+//             sum+=square;
+            
+//             n/=10;
+//         }
+//         if(sum==1) return true;
+//         return isHappy(sum);
+//     }
+// }
+
+class Solution {
+    public boolean isHappy(int n) {
+        Set<Integer> set=new HashSet<Integer>();
+        int remain,sum;
+        while(set.add(n))
+        {
+            sum=0;
+            while(n>0)
+            {
+                remain=n%10;
+                sum+=remain*remain;
+                n/=10;
+            }
+            if(sum==1)
+            {
+                return true;
+            }
+            n=sum;
+        }
+        return false;
+    }
+}

@@ -1,0 +1,43 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+//DUMMY my solution beats 98%
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        if(head==null)
+        {
+            return null;
+        }
+        if(head.next==null)
+        {
+            if(head.val!=val)
+            {
+                return head;
+            }
+            else return null;
+        }
+        
+        ListNode dummy=new ListNode(0);                                                          
+        ListNode pre=dummy;
+        ListNode curr=head;
+        pre.next=head;
+        while(curr!=null)
+        {
+            if(curr.val==val)
+            {
+                pre.next=curr.next;
+                curr=curr.next;
+            }
+            else{
+                curr=curr.next;
+                pre=pre.next;
+            }
+        }
+        return dummy.next;
+    }
+}

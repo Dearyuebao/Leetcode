@@ -1,0 +1,62 @@
+class Solution {
+    public boolean isIsomorphic(String s, String t) {
+        //my solution beats 35%
+//         char[] sc=s.toCharArray();
+//         char[] tc=t.toCharArray();
+//         int n=s.length();
+        
+//         Map<Character,Integer> map=new HashMap<>();
+//         int[] counts=new int[n];
+//         for(int i=0;i<n;i++)
+//         {
+//             if(map.containsKey(Character.valueOf(sc[i])))
+//             {
+//                 counts[i]=map.get(Character.valueOf(sc[i]));
+//             }
+//             else{
+//                 counts[i]=i;
+//                 map.put(Character.valueOf(sc[i]),i);
+//             }
+//         }
+        
+//         Map<Character,Integer> map2=new HashMap<>();
+//         int[] counts2=new int[n];
+//         for(int i=0;i<n;i++)
+//         {
+//             if(map2.containsKey(Character.valueOf(tc[i])))
+//             {
+//                 counts2[i]=map2.get(Character.valueOf(tc[i]));
+//             }
+//             else{
+//                 counts2[i]=i;
+//                 map2.put(Character.valueOf(tc[i]),i);
+//             }
+//         }
+        
+//         for(int i=0;i<n;i++)
+//         {
+//             if(counts[i]!=counts2[i])
+//             {
+//                 return false;
+//             }
+//         }
+//         return true;
+        
+        int n=s.length();
+        int[] sarr=new int[128];
+        int[] tarr=new int[128];
+        
+        for(int i=0;i<n;i++)
+        {
+            if(sarr[s.charAt(i)]!=tarr[t.charAt(i)])
+            {
+                return false;
+            }
+            else{
+                sarr[s.charAt(i)]=i+1;//instead of i, take care
+                tarr[t.charAt(i)]=i+1;
+            }
+        }
+        return true;
+    }
+}

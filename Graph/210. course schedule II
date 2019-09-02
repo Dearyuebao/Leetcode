@@ -1,0 +1,56 @@
+import java.util.ArrayList;
+class Solution {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        int[] res=new int[numCourses];
+        int[] nul=new int[0];
+        ArrayList[] graph=new ArrayList[numCourses];
+        for(int i=0;i<numCourses;i++)
+        {
+            graph[i]=new ArrayList();
+        }
+        
+        for(int i=0;i<prerequisites.length;i++)
+        {
+            graph[prerequisites[i][1]].add(prerequisites[i][0]);
+        }
+        
+        ArrayList<Integer> list=new ArrayList<Integer>();
+        int[] visited=new int[numCourses];
+        for(int i=0;i<numCourses;i++)
+        {
+            if(helper(graph,visited,list,i))
+            {
+                return nul;
+            }
+        }
+        for(int i=0;i<numCourses;i++)
+        {
+            res[i]=list.get(numCourses-i-1);
+        }
+        return res;
+    }
+    
+    //1:visiting 2:visited
+    public boolean helper(ArrayList[] graph,int[] visited,ArrayList<Integer> list,int course)
+    {
+        if(visited[course]==1)
+        {
+            return true;
+        }
+        if(visited[course]==2)
+        {
+            return false;
+        }
+        visited[course]=1;
+        for(int i=0;i<graph[course].size();i++)
+        {
+            if(helper(graph,visited,list,(int)graph[course].get(i)))
+            {
+                return true;
+            }
+        }
+        visited[course]=2;
+        list.add(course);
+        return false;
+    }
+}

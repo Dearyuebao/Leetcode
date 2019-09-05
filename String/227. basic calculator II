@@ -1,0 +1,47 @@
+class Solution {
+    public int calculate(String s) {
+        if(s==null||s.length()==0)
+        {
+            return 0;
+        }
+        int len=s.length();
+        Stack<Integer> stack=new Stack<Integer>();
+        int num=0;
+        char sign='+';
+        for(int i=0;i<len;i++)
+        {
+            // 如果当前位是数字，赋值给num；如果当前位是标点符号，如果为+/-，将num放入stack，如果为*/，从stack中取出一个运算后放入stack，stack 中存储的值是由string中+/-分隔出来的
+            if(Character.isDigit(s.charAt(i)))
+            {
+                num=num*10+s.charAt(i)-'0';//take care
+            }
+            if((!Character.isDigit(s.charAt(i))&&s.charAt(i)!=' ')||i==len-1)
+            {
+                if(sign=='-')
+                {
+                    stack.push(-num);
+                }
+                if(sign=='+')
+                {
+                    stack.push(num);
+                }
+                if(sign=='*')
+                {
+                    stack.push(stack.pop()*num);
+                }
+                if(sign=='/')
+                {
+                    stack.push(stack.pop()/num);
+                }
+                sign=s.charAt(i);
+                num=0;
+            }
+        }
+        int res=0;
+        for(int re:stack)
+        {
+            res+=re;
+        }
+        return res;
+    }
+}

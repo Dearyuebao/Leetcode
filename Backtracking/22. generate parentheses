@@ -1,0 +1,25 @@
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        ArrayList<String> res=new ArrayList<String>();
+        if(n<=0){
+            return res;
+        }
+        helper(res,"",n,n);
+        return res;
+    }
+    
+    public void helper(ArrayList<String> res,String curr,int left,int right){
+        if(left==0&&right==0){
+            res.add(curr);
+            return;
+        }
+        
+        if(left>0){
+            helper(res,curr+"(",left-1,right);
+        }
+        
+        if(right>0&&left<right){
+            helper(res,curr+")",left,right-1);
+        }
+    }
+}

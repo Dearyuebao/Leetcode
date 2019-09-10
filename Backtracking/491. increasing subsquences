@@ -1,0 +1,50 @@
+class Solution {
+    public List<List<Integer>> findSubsequences(int[] nums) {
+      List<List<Integer>> res=new ArrayList<ArrayList<Integer>>();
+      if(nums==null||nums.length==0)
+      {
+        return res;
+      }
+      boolean[] visited=new boolean[nums.length];
+      int[] prev=ifPrev(nums);
+      helper(nums,0,visited,prev,new ArrayList<Integer>(),res);
+      
+      return res;
+    }
+    
+    public int[] ifPrev(int[] nums){
+      int[] prev=new int[nums.length];
+      Map<Integer,Integer> map=new HashMap<>();
+      for(int i=0;i<nums.length;i++){
+        if(map.containsKsy(nums[i])){
+          prev[i]=map.get(nums[i]);
+        }
+        else{
+          prev[i]=-1;
+        }
+        map.put(nums[i],i);
+      }
+    }
+    
+    public void helper(int[] nums,int index,int[] visited,int[] prev,ArrayList<Integer> sub,List<List<String>> res){
+      if(sub.size()>1){
+        res.add(new ArrayList<Integer>(sub));
+      }
+      
+      for(int i=index;i<nums.length;i++){
+        if(sub.size()>0&&nums[i]<nums[index-1]){
+          continue;
+        }
+        
+        if(prev[i]!=-1&&visited[prev[i]]==false&&(sub.size()==0||prev[i]>index-1)){
+          continue;
+        }
+        
+        sub.add(nums[i]);
+        visited[i]=true;
+        helper(nums,i+1,visited,prev,sub,res);
+        visited[i]=false;
+        sub.remove(sub.size()-1);
+      }
+    }
+}

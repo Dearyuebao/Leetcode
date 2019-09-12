@@ -17,7 +17,8 @@ class Solution{
         temp.add(needs.get(j)-offer.get(j));
       }
       
-      local_min=Math.min(local_min,offer.get(offer.size()-1)+helper(prices,specials,temp,i));
+      if(temp!=null)
+        local_min=Math.min(local_min,offer.get(offer.size()-1)+helper(prices,specials,temp,i));
     }
     return local_min;
   }

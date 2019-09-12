@@ -1,0 +1,33 @@
+class Solution{
+  public int shoppingOffers(List<Integer> prices, List<List<Integer>> specials, List<Integer> needs){
+    return helper(prices,specials,needs);
+  }
+  
+  public int helper(List<Integer> prices,List<List<Integer>> specials,List<Integer> needs,int pos){
+    int local_min=directPurchase(prices,needs);
+    for(int i=pos;i<specials.size();i++){
+      List<Integer> offer=specials.get(i);
+      List<Integer> temp=new ArrayList<Integer>();
+      
+      for(int j=0;j<needs.size();j++){
+        if(offer.get(j)>needs.get(j)){
+          temp=null;
+          break;
+        }
+        temp.add(needs.get(j)-offer.get(j));
+      }
+      
+      local_min=Math.min(local_min,offer.get(offer.size()-1)+helper(prices,specials,temp,i));
+    }
+    return local_min;
+  }
+  
+  public int directPurchase(List<Integer> prices,List<Integer> needs)
+  {
+    int res=0;
+    for(int i=0;i<prices.size();i++){
+      res+=prices.get(i)*needs.get(i);
+    }
+    return res;
+  }
+}

@@ -1,0 +1,54 @@
+class Solution{
+  public List<List<String>> solveQueens(int n){
+    List<List<String>> res=new ArrayList<>();
+    if(n<=0){
+      return res;
+    }
+    stringbuilder(n,new ArrayList<Integer>(),res);
+    return res;
+  }
+  
+  public void stringbuilder(int n,List<Integer> cols,List<List<String>> res){
+    if(cols.size()==n){
+      res.add(drawboard(cols));
+      return;
+    }
+    for(int i=0;i<n;i++){
+      if(!isValid(cols,i)){
+        continue;
+      }
+      cols.add(i);
+      stringbuilder(n,cols,res);
+      cols.remove(cols.size()-1);
+    }
+    return;
+  }
+  
+  public boolean isValid(List<Integer> cols,int col){
+    int row=cols.size();
+    for(int i=0;i<cols.size();i++){
+      if(cols.get(i)==i){
+        return false;
+      }
+      if(cols.get(i)+i==row+col){
+        return false;
+      }
+      if(i-cols.get(i)==row-col){
+        return false;
+      }
+    }
+    return true;
+  }
+  
+  public List<String> drawboard(List<Integer> cols){
+    List<String> res=new ArrayList<String>();
+    for(int i=0;i<cols.size();i++){
+      StringBuilder sb=new StringBuilder();
+      for(int j=0;j<cols.size();j++){
+        sb.append(cols.get(i)==j?'Q':'.');
+      }
+      res.add(sb.toString());
+    }
+    return res;
+  }
+}

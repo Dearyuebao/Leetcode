@@ -1,0 +1,92 @@
+solution 1:
+
+class Solution {
+    public int totalNQueens(int n) {
+    int[] res=new int[1];
+        res[0]=0;
+    if(n<=0){
+      return res[0];
+    }
+    stringbuilder(n,new ArrayList<Integer>(),res);
+    return res[0];
+    }
+    
+    public void stringbuilder(int n,List<Integer> cols,int[] res){
+    if(cols.size()==n){
+      res[0]++;
+      return;
+    }
+    for(int i=0;i<n;i++){
+      if(!isValid(cols,i)){
+        continue;
+      }
+      cols.add(i);
+      stringbuilder(n,cols,res);
+      cols.remove(cols.size()-1);
+    }
+    
+  }
+    
+    public boolean isValid(List<Integer> cols,int col){
+    int row=cols.size();
+    for(int i=0;i<cols.size();i++){
+      if(cols.get(i)==col){
+        return false;
+      }
+      if(cols.get(i)+i==row+col){
+        return false;
+      }
+      if(i-cols.get(i)==row-col){
+        return false;
+      }
+    }
+    return true;
+  }
+}
+
+solution2:
+
+class Solution {
+    int sum;
+    public int totalNQueens(int n) {
+        sum=0;
+        int[] usedColumns=new int[n];
+        placeQueen(usedColumns,0);
+        return sum;
+    }
+    
+    
+    public void placeQueen(int[] usedColumns, int row) {
+        int n = usedColumns.length;
+        
+        if (row == n) {
+            sum ++;
+            return;
+        }
+        
+        for (int i = 0; i < n; i++) {
+            if (isValid(usedColumns, row, i)) {
+                usedColumns[row] = i;
+                placeQueen(usedColumns, row + 1);
+            }
+        }
+    }
+ 
+
+        // 51题中的List<Integer> cols和52题中的int[] usedColumns其实是起到的一样的效果
+        // 51中cols的size记录着算到第几行了 52中函数还有一个入口参数row用来记录第几行
+   
+        
+        public boolean isValid(int[] usedColumns, int row, int col) {
+        for (int i = 0; i < row; i++) {
+            if (usedColumns[i] == col) {
+                return false;
+            }
+            if ((row - i) == Math.abs(col-usedColumns[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+

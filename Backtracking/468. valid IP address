@@ -34,4 +34,43 @@ class Solution{
     
     return "Neither";
   }
+  
+  public boolean isValidIPV4(String IP){
+    int num=0;
+    if(IP.length()<=0||IP.length()>3){
+      return false;
+    }
+    if(IP.length()>1&&IP.charAt(0)=='0'){
+      return false;
+    }
+    for(int i=0;i<IP.length();i++){
+      num=num*10+IP.charAt(i);
+    }
+    if(num>=0&&num<256){
+      return true;
+    }
+    return false;
+  }
+  
+  public boolean isValidIPV6(String s){
+    if(s.length()<=0||s.length()>4){
+      return false;
+    }
+    for(int i=0;i<s.length();i++){
+      if(Character.indexOf(s.charAt(i))==-1){
+        return false;
+      }
+    }
+    return true;
+  }
+  
+  public boolean token(String IP,char taken){
+    int count=0;
+    for(int i=0;i<IP.length();i++){
+      if(IP.charAt(i)==taken){
+        count++;
+      }
+    }
+    return count;
+  }
 }

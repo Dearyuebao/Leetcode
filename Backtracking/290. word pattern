@@ -33,3 +33,45 @@ class Solution {
     }
 }
 
+class Solution {
+    public boolean wordPattern(String pattern, String str) {
+        Map<Character,Integer> map1=new HashMap<>();
+        Map<String,Integer> map2=new HashMap<>();
+        
+        String[] st=str.split(" ");
+        if(pattern.length()!=st.length){
+            return false;
+        }
+        for(int i=0;i<st.length;i++){
+            if(map1.containsKey(pattern.charAt(i))&&map2.containsKey(st[i])){
+                if(!map1.get(pattern.charAt(i)).equals(map2.get(st[i]))){
+                    return false;
+                }
+                else{
+                    continue;
+                }
+            }
+            else if(map1.containsKey(pattern.charAt(i))&&!map2.containsKey(st[i])){
+                return false;
+            }
+            else if(!map1.containsKey(pattern.charAt(i))&&map2.containsKey(st[i])){
+                return false;
+            }
+            else{
+                map1.put(pattern.charAt(i),i);
+                map2.put(st[i],i);
+            }
+        }
+        return true;
+    }
+}
+
+//出现很奇怪的test case通不过的情况
+//当s多于多少个的时候，就会输出false
+//下面test case只要减少一个c和对应的s就可以通过
+
+// "ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccdd"
+// "s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s s t t"
+
+//解决办法！！！
+//对于object的比较一定要用equals而不是==！！！！！！！！！！！！！！

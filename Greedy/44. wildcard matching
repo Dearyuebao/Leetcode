@@ -1,0 +1,53 @@
+class Solution {
+  public boolean isMatch(String s, String p){
+    if(s == null || p == null) {
+      return false;
+    }
+    
+    boolean[][] memo = new boolean[s.length()][p.length()];
+    boolean[][] visited = new boolean[s.length()][p.length()];
+    
+    return isMatchHelper(s, 0, p, 0, visited, memo);
+  }
+  
+  public boolean isMatchHelper(String s, int sIndex, String p, int pIndex, boolean[][] visited, boolean[][] memo) {
+    if(s.length() == sIndex) {
+      return allStar(pIndex, p);
+    }
+    
+    if(p.length() == pIndex) {
+      return s.length() == sIndex;
+    }
+    
+    if(visited[sIndex][pIndex]) {
+      return memo[sIndex][pIndex];
+    }
+    
+    boolean match;
+    if(p.charAt(pIndex) == '*') {
+      match = isMatchHelper(s, sIndex + 1, p, pIndex, visited, memo) || isMatchHelper(s, sIndex, p, pIndex + 1, visited, memo);
+    } else {
+      match = charMatch(s.charAt(sIndex), p.charAt(pIndex)) && isMatchHelper(s, sIndex + 1, p, pIndex + 1, visited, memo);
+    }
+    
+    visited[sIndex][pIndex] = true;
+    memo[sIndex][pIndex] = match;
+    return match;
+  }
+  
+  public boolean allStar(int pIndex, String p) {
+    for(int i=pIndex; i<p.length(); i++) {
+      if(p.charAt(i) != '*') {
+        return false;
+      }
+    }
+    return true;
+  }
+  
+  public charMatch(char s, char p) {
+    if(s == p || s == '?') {
+      return true;
+    }
+    return false;
+  }
+}

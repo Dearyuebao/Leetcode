@@ -1,0 +1,18 @@
+class Solution {
+    public String removeDuplicates(String S) {
+        if(S.length() == 0) {
+            return S; 
+        }
+        
+        char[] buffer = new char[S.length()];
+        int slow = 0;
+        for(int fast = 0; fast < S.length(); fast ++) {
+            if(slow == 0 || S.charAt(fast) != buffer[slow-1]) {
+                buffer[slow++] = S.charAt(fast);
+            } else {
+                slow--;
+            }
+        }
+        return new String(buffer, 0, slow);
+    }
+}

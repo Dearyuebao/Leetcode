@@ -1,0 +1,35 @@
+class Solution {
+    public void moveZeroes(int[] nums) {
+        if(nums == null || nums.length == 0) {
+            return;
+        }
+        int slow = 0;
+        for(int fast = 0; fast < nums.length ; fast++) {
+            if(nums[fast] != 0) {
+                nums[slow++] = nums[fast];
+            }
+        }
+        
+        for(; slow < nums.length ; slow++) {
+            nums[slow] = 0;
+        }
+        
+    }
+}
+
+// follow up:
+
+// int left = 0, right = nums.length - 1;
+// while(left < right) {
+//     while (nums[left] != 0) {
+//        left ++; 
+//     }
+//     while (nums[right] ==0) {
+//         right --;
+//     }
+//     if(left <= right) {
+//         int temp = nums[right];
+//         nums[right] = nums[left];
+//         nums[left] = temp;
+//     }
+// }

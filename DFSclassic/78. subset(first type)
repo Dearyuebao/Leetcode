@@ -1,0 +1,24 @@
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        dfs(res, nums, new ArrayList<Integer>(), 0);
+        return res;
+    }
+    
+    public void dfs(List<List<Integer>> res, int[] nums, List<Integer> subset, int level) {
+        if(level == nums.length) {
+            res.add(new ArrayList<Integer>(subset));
+            return;
+        } else {
+            subset.add(nums[level]);
+            dfs(res, nums, subset, level + 1);
+            subset.remove(subset.size() - 1);
+            
+            dfs(res, nums, subset, level + 1);
+        }
+    }
+}
+
+//每调用一次dfs函数相当于访问一个节点
+//S: O(n)
+//T: O(2^n)

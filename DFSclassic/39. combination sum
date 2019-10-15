@@ -1,0 +1,33 @@
+class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> res = new ArrayList<>();
+        if(candidates == null || candidates.length == 0) {
+            return res;
+        }
+        dfs(res, candidates, new ArrayList<Integer>(), target, 0);
+        return res;
+    }
+    
+    public void dfs(List<List<Integer>> res, int[] candidates, List<Integer> subset, int target, int level) {
+        if(level == candidates.length || target <= 0) {
+            if(target == 0) {
+                res.add(new ArrayList<Integer>(subset));
+                return;
+            }
+        } else {
+            int cnt = target / candidates[level];
+            for(int i = 0; i <= cnt; i++) {
+                dfs(res, candidates, subset, target, level + 1);
+                subset.add(candidates[level]);
+                target-=candidates[level];
+            }
+            
+            for(int i = 0; i <= cnt; i++) {
+                subset.remove(subset.size() - 1);
+            }
+        }
+    }
+}
+//T: O(k^n)
+//S: O(n)
+//dynamic and ever-changing depth first search tree

@@ -1,0 +1,31 @@
+class Solution {
+    public boolean isBipartite(int[][] graph) {
+        if(graph == null || graph.length == 0) {
+            return true;
+        }
+        int n = graph.length;
+        int[] mark = new int[n];
+        Arrays.fill(mark,0);
+        Queue<Integer> q = new LinkedList<>();
+        
+        for(int i = 0; i < n; i++) {
+            if(mark[i] != 0) continue;
+            q.offer(i);
+            int curPart = 1;
+            mark[i] = curPart;
+            while(!q.isEmpty()) {
+                int curr = q.poll();
+                int len = graph[curr].length;
+                for(int j = 0; j < len; j++) {
+                    int each = graph[curr][j];
+                    if(mark[each] == mark[curr]) return false;
+                    if(mark[each] == 0){
+                        mark[each] = 3 - mark[curr];
+                        q.offer(each);
+                    }
+                }
+            }
+        }
+        return true;
+    }
+}

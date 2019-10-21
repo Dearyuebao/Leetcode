@@ -40,3 +40,38 @@ class Solution {
         return true;
     }
 }
+
+用stack（上）或者queue（下）都可以 queue的速度快一些
+class Solution {
+    class Node{
+        TreeNode left;
+        TreeNode right;
+        
+        public Node(TreeNode left, TreeNode right) {
+            this.left = left;
+            this.right = right;
+        }
+    }
+    public boolean isSymmetric(TreeNode root) {
+        if(root == null) {
+            return true;
+        }
+        
+        Queue<Node> stack = new LinkedList<>();
+        stack.offer(new Node(root.left, root.right));
+        while(!stack.isEmpty()) {
+            Node curr = stack.poll();
+            if(curr.left == null || curr.right == null) {
+                if(curr.left != curr.right) {
+                    return false;
+                }
+                else continue;
+            }
+            if(curr.left.val == curr.right.val) {
+                stack.offer(new Node(curr.left.left, curr.right.right));
+                stack.offer(new Node(curr.left.right, curr.right.left));
+            } else return false;
+        }
+        return true;
+    }
+}
